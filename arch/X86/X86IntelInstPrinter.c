@@ -628,8 +628,9 @@ static void printPCRelImm(MCInst *MI, unsigned OpNo, SStream *O)
 		if (imm < 0) {
 			SStream_concat(O, "0x%"PRIx64, imm);
 		} else {
-			// handle 16bit segment bound
-			if (MI->csh->mode == CS_MODE_16)
+			// far call in real-address/v8086 mode clears 2 upper bytes of EIP
+			// if operand-size attribute is 16
+			if (MI->csh->mode == CS_MODE_16 && MI->immediateSize == 2)
 				imm = imm & 0xffff;
 
 			if (imm > HEX_THRESHOLD)

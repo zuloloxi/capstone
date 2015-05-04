@@ -952,6 +952,7 @@ bool X86_getInstruction(csh ud, const uint8_t *code, size_t code_len,
 		result = (!translateInstruction(instr, &insn)) ?  true : false;
 		if (result) {
 			instr->imm_size = insn.immSize;
+			instr->immediateSize = insn.immediateSize;
 			if (handle->detail) {
 				update_pub_insn(instr->flat_insn, &insn, instr->x86_prefix);
 			} else {
